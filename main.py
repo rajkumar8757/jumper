@@ -1,24 +1,31 @@
-def on_overlap_tile(sprite, location):
-    game.set_game_over_message(False, "GAME OVER!")
-scene.on_overlap_tile(SpriteKind.player,
-    sprites.builtin.forest_tiles0,
-    on_overlap_tile)
-
 def on_a_pressed():
     if mySprite.is_hitting_tile(CollisionDirection.BOTTOM):
         mySprite.vy += -175
-        scene.camera_shake(2, 500)
         music.play(music.melody_playable(music.jump_up),
             music.PlaybackMode.UNTIL_DONE)
+        scene.camera_shake(2, 500)
 controller.A.on_event(ControllerButtonEvent.PRESSED, on_a_pressed)
 
-def on_overlap_tile2(sprite2, location2):
+def tittle():
+    music.play(music.string_playable("F G F G D G E B ", 200),
+        music.PlaybackMode.IN_BACKGROUND)
+    game.splash("This game was created by Rajkumar")
+    game.splash("welcome to my game")
+
+def on_overlap_tile(sprite2, location2):
     game.game_over(True)
 scene.on_overlap_tile(SpriteKind.player,
     sprites.dungeon.collectible_insignia,
+    on_overlap_tile)
+
+def on_overlap_tile2(sprite22, location22):
+    game.game_over(False)
+scene.on_overlap_tile(SpriteKind.player,
+    sprites.dungeon.floor_light0,
     on_overlap_tile2)
 
 mySprite: Sprite = None
+tittle()
 mySprite = sprites.create(img("""
         . . . . . . f f f f . . . . . . 
             . . . . f f f 2 2 f f f . . . . 

@@ -1,3 +1,6 @@
+namespace SpriteKind {
+    export const coin = SpriteKind.create()
+}
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
         mySprite.vy += -175
@@ -5,10 +8,27 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         scene.cameraShake(2, 500)
     }
 })
+function tittle () {
+    music.play(music.stringPlayable("F G F G D G E B ", 200), music.PlaybackMode.InBackground)
+    game.splash("This game was created by Rajkumar")
+    game.splash("welcome to my game")
+}
+sprites.onOverlap(SpriteKind.Player, SpriteKind.coin, function (sprite, otherSprite) {
+    info.changeScoreBy(1)
+    sprites.destroy(otherSprite)
+})
+scene.onOverlapTile(SpriteKind.Player, sprites.builtin.oceanSand0, function (sprite2, location2) {
+    game.gameOver(false)
+})
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleInsignia, function (sprite2, location2) {
     game.gameOver(true)
 })
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.floorLight0, function (sprite2, location2) {
+    game.gameOver(false)
+})
+let coin: Sprite = null
 let mySprite: Sprite = null
+tittle()
 mySprite = sprites.create(img`
     . . . . . . f f f f . . . . . . 
     . . . . f f f 2 2 f f f . . . . 
@@ -156,3 +176,99 @@ controller.moveSprite(mySprite, 100, 0)
 let pixlestometers = 30
 let gravity = pixlestometers * 9.8
 mySprite.ay = gravity
+for (let value of tiles.getTilesByType(assets.tile`myTile`)) {
+    coin = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . f f f f f f f . . . . 
+        . . . . f 5 5 5 5 5 5 5 f . . . 
+        . . . f 5 5 5 5 5 5 5 5 5 f . . 
+        . . . f 5 5 5 5 5 5 5 5 5 f . . 
+        . . . f 5 5 5 5 5 5 5 5 5 f . . 
+        . . . f 5 5 5 5 5 5 5 5 5 f . . 
+        . . . f 5 5 5 5 5 5 5 5 5 f . . 
+        . . . f 5 5 5 5 5 5 5 5 5 f . . 
+        . . . f 5 5 5 5 5 5 5 5 5 f . . 
+        . . . . f 5 5 5 5 5 5 5 f . . . 
+        . . . . . f f f f f f f . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.coin)
+    animation.runImageAnimation(
+    coin,
+    [img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . f f f f f f f . . . . 
+        . . . . f 5 5 5 5 5 5 5 f . . . 
+        . . . f 5 5 5 5 5 5 5 5 5 f . . 
+        . . f 5 5 5 5 5 5 5 5 5 5 5 f . 
+        . . f 5 5 5 5 5 5 5 5 5 5 5 f . 
+        . . f 5 5 5 5 5 5 5 5 5 5 5 f . 
+        . . f 5 5 5 5 5 5 5 5 5 5 5 f . 
+        . . f 5 5 5 5 5 5 5 5 5 5 5 f . 
+        . . f 5 5 5 5 5 5 5 5 5 5 5 f . 
+        . . f 5 5 5 5 5 5 5 5 5 5 5 f . 
+        . . . f 5 5 5 5 5 5 5 5 5 f . . 
+        . . . . f 5 5 5 5 5 5 5 f . . . 
+        . . . . . f f f f f f f . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . f f f f f . . . . . 
+        . . . . . f 5 5 5 5 5 f . . . . 
+        . . . . f 5 5 5 5 5 5 5 f . . . 
+        . . . f 5 5 5 5 5 5 5 5 5 f . . 
+        . . . f 5 5 5 5 5 5 5 5 5 f . . 
+        . . . f 5 5 5 5 5 5 5 5 5 f . . 
+        . . . f 5 5 5 5 5 5 5 5 5 f . . 
+        . . . f 5 5 5 5 5 5 5 5 5 f . . 
+        . . . f 5 5 5 5 5 5 5 5 5 f . . 
+        . . . f 5 5 5 5 5 5 5 5 5 f . . 
+        . . . . f 5 5 5 5 5 5 5 f . . . 
+        . . . . . f 5 5 5 5 5 f . . . . 
+        . . . . . . f f f f f . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . f f f . . . . . . 
+        . . . . . . f 5 5 5 f . . . . . 
+        . . . . . f 5 5 5 5 5 f . . . . 
+        . . . . f 5 5 5 5 5 5 5 f . . . 
+        . . . . f 5 5 5 5 5 5 5 f . . . 
+        . . . . f 5 5 5 5 5 5 5 f . . . 
+        . . . . f 5 5 5 5 5 5 5 f . . . 
+        . . . . f 5 5 5 5 5 5 5 f . . . 
+        . . . . f 5 5 5 5 5 5 5 f . . . 
+        . . . . f 5 5 5 5 5 5 5 f . . . 
+        . . . . . f 5 5 5 5 5 f . . . . 
+        . . . . . . f 5 5 5 f . . . . . 
+        . . . . . . . f f f . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . f f . . . . . . . 
+        . . . . . . . f 5 f . . . . . . 
+        . . . . . . f 5 5 5 f . . . . . 
+        . . . . . f 5 5 5 5 5 f . . . . 
+        . . . . . f 5 5 5 5 5 f . . . . 
+        . . . . . f 5 5 5 5 5 f . . . . 
+        . . . . . f 5 5 5 5 5 f . . . . 
+        . . . . . f 5 5 5 5 5 f . . . . 
+        . . . . . f 5 5 5 5 5 f . . . . 
+        . . . . . f 5 5 5 5 5 f . . . . 
+        . . . . . . f 5 5 5 f . . . . . 
+        . . . . . . . f 5 f . . . . . . 
+        . . . . . . . f f . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `],
+    500,
+    true
+    )
+    tiles.placeOnTile(coin, value)
+    tiles.setTileAt(value, assets.tile`transparency16`)
+}
